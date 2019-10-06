@@ -3,21 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /////// Factory Method Design Pattern Setup Start ///////
-
-public class Prefab : MonoBehaviour
-{
-    public GameObject _prefab;
-    //void convert(GameObject prefab)
-    //{
-    //    _prefab = prefab;
-    //}
-
-    public Prefab(GameObject prefab)
-    {
-        _prefab = prefab;
-    }
-}
-
 public interface Building
 {
     void Build(Vector3 pos, Vector3 scale);
@@ -214,7 +199,7 @@ public class Redo : Commander
 
     public override void run()
     {
-        _lastBuilt.Build(_vec3, new Vector3(1, 1, 1));
+        _lastBuilt.Build(_vec3, new Vector3(0.7f, 0.7f, 0.7f));
         Debug.Log("Redo");
     }
 }
@@ -236,24 +221,23 @@ public class Undo : Commander
 }
 public class RedoUndoButton
 {
-    public Commander _cmd;
-    public RedoUndoButton(Commander cmd)
+    public Commander _button;
+    public RedoUndoButton(Commander button)
     {
-        _cmd = cmd;
+        _button = button;
     }
 
     public void press()
     {
-        _cmd.run();
+        _button.run();
     }
 }
 
 /////// Command Design Pattern Setup End /////////
 public class ObjectCreate : MonoBehaviour
 {
-    public GameObject barn;
-    public GameObject barn2;
     BuildingFactory factory = new BuildingFactory();
+    Building builder;
 
     Vector3 lastObjPos;
     Building lastObjBuilt;
@@ -262,6 +246,7 @@ public class ObjectCreate : MonoBehaviour
     Redo redo;
     Undo undo;
     RedoUndoButton button;
+    bool buildEnable = true;
 
     // Start is called before the first frame update
     void Start()
@@ -275,110 +260,89 @@ public class ObjectCreate : MonoBehaviour
         redo = new Redo(lastObjPos, lastObjBuilt);
         undo = new Undo(unwanted);
 
-        if (Input.GetKeyDown(KeyCode.P))
+        if (buildEnable == true)
         {
-            Building builder = factory.Type(1);
-            builder.Build(gameObject.transform.position, new Vector3(1, 1, 1));
-            lastObjPos = gameObject.transform.position;
-            lastObjBuilt = builder;
-            unwanted = builder;
+            if (Input.GetKeyDown(KeyCode.P))
+            {
+                builder = factory.Type(1);
+                builder.Build(gameObject.transform.position, new Vector3(0.7f, 0.7f, 0.7f));
+                lastObjPos = gameObject.transform.position;
+                lastObjBuilt = builder;
+                unwanted = builder;
+            }
+
+            if (Input.GetKeyDown(KeyCode.O))
+            {
+                builder = factory.Type(2);
+                builder.Build(gameObject.transform.position, new Vector3(0.7f, 0.7f, 0.7f));
+                lastObjPos = gameObject.transform.position;
+                lastObjBuilt = builder;
+                unwanted = builder;
+            }
+
+            if (Input.GetKeyDown(KeyCode.L))
+            {
+                builder = factory.Type(3);
+                builder.Build(gameObject.transform.position, new Vector3(0.7f, 0.7f, 0.7f));
+                lastObjPos = gameObject.transform.position;
+                lastObjBuilt = builder;
+                unwanted = builder;
+            }
+
+            if (Input.GetKeyDown(KeyCode.K))
+            {
+                builder = factory.Type(5);
+                builder.Build(gameObject.transform.position, new Vector3(0.7f, 0.7f, 0.7f));
+                lastObjPos = gameObject.transform.position;
+                lastObjBuilt = builder;
+                unwanted = builder;
+            }
+
+            if (Input.GetKeyDown(KeyCode.J))
+            {
+                builder = factory.Type(4);
+                builder.Build(gameObject.transform.position, new Vector3(0.7f, 0.7f, 0.7f));
+                lastObjPos = gameObject.transform.position;
+                lastObjBuilt = builder;
+                unwanted = builder;
+            }
+
+            if (Input.GetKeyDown(KeyCode.U))
+            {
+                builder = factory.Type(6);
+                builder.Build(gameObject.transform.position, new Vector3(0.7f, 0.7f, 0.7f));
+                lastObjPos = gameObject.transform.position;
+                lastObjBuilt = builder;
+                unwanted = builder;
+            }
+
+            if (Input.GetKeyDown(KeyCode.I))
+            {
+                builder = factory.Type(7);
+                builder.Build(gameObject.transform.position, new Vector3(0.7f, 0.7f, 0.7f));
+                lastObjPos = gameObject.transform.position;
+                lastObjBuilt = builder;
+                unwanted = builder;
+            }
+
+            if (Input.GetKeyDown(KeyCode.N))
+            {
+                button = new RedoUndoButton(redo);
+                button.press();
+            }
+
+            if (Input.GetKeyDown(KeyCode.M))
+            {
+                button = new RedoUndoButton(undo);
+                button.press();
+            }
         }
 
-        if (Input.GetKeyDown(KeyCode.O))
+        if (Input.GetKeyDown(KeyCode.Backspace))
         {
-            Building builder = factory.Type(2);
-            builder.Build(gameObject.transform.position, new Vector3(1, 1, 1));
-            lastObjPos = gameObject.transform.position;
-            lastObjBuilt = builder;
-            unwanted = builder;
-        }
-
-        if (Input.GetKeyDown(KeyCode.L))
-        {
-            Building builder = factory.Type(3);
-            builder.Build(gameObject.transform.position, new Vector3(0.7f, 0.7f, 0.7f));
-            lastObjPos = gameObject.transform.position;
-            lastObjBuilt = builder;
-            unwanted = builder;
-        }
-
-        if (Input.GetKeyDown(KeyCode.K))
-        {
-            Building builder = factory.Type(5);
-            builder.Build(gameObject.transform.position, new Vector3(0.7f, 0.7f, 0.7f));
-            lastObjPos = gameObject.transform.position;
-            lastObjBuilt = builder;
-            unwanted = builder;
-        }
-
-        if (Input.GetKeyDown(KeyCode.J))
-        {
-            Building builder = factory.Type(4);
-            builder.Build(gameObject.transform.position, new Vector3(0.7f, 0.7f, 0.7f));
-            lastObjPos = gameObject.transform.position;
-            lastObjBuilt = builder;
-            unwanted = builder;
-        }
-
-        if (Input.GetKeyDown(KeyCode.U))
-        {
-            Building builder = factory.Type(6);
-            builder.Build(gameObject.transform.position, new Vector3(0.7f, 0.7f, 0.7f));
-            lastObjPos = gameObject.transform.position;
-            lastObjBuilt = builder;
-            unwanted = builder;
-        }
-
-        if (Input.GetKeyDown(KeyCode.I))
-        {
-            Building builder = factory.Type(7);
-            builder.Build(gameObject.transform.position, new Vector3(0.7f, 0.7f, 0.7f));
-            lastObjPos = gameObject.transform.position;
-            lastObjBuilt = builder;
-            unwanted = builder;
-        }
-
-        if (Input.GetKeyDown(KeyCode.N))
-        {
-            button = new RedoUndoButton(redo);
-            button.press();
-        }
-
-        if (Input.GetKeyDown(KeyCode.M))
-        {
-            button = new RedoUndoButton(undo);
-            button.press();
+            gameObject.AddComponent<BoxCollider>();
+            gameObject.AddComponent<Rigidbody>();
+            buildEnable = false;
         }
     }
-
-    //public void createCube()
-    //{
-    //    var cube = GameObject.CreatePrimitive(PrimitiveType.Cube);
-    //    float posX = gameObject.transform.position.x;
-    //    float posY = gameObject.transform.position.y;
-    //    float posZ = gameObject.transform.position.z;
-    //
-    //    cube.transform.position = new Vector3(posX, posY, posZ);
-    //    cube.transform.localScale = new Vector3 (1, 1, 1);
-    //    cube.AddComponent<BoxCollider>();
-    //}
-    //
-    //public void createSphere()
-    //{
-    //    var sphere = GameObject.CreatePrimitive(PrimitiveType.Sphere);
-    //    float posX = gameObject.transform.position.x;
-    //    float posY = gameObject.transform.position.y;
-    //    float posZ = gameObject.transform.position.z;
-    //
-    //    sphere.transform.position = new Vector3(posX, posY, posZ);
-    //    sphere.transform.localScale = new Vector3(1, 1, 1);
-    //}
-    //
-    //public void createBarn()
-    //{
-    //    float posX = gameObject.transform.position.x;
-    //    float posY = gameObject.transform.position.y;
-    //    float posZ = gameObject.transform.position.z;
-    //    Instantiate(barn, new Vector3(posX, posY, posZ), Quaternion.identity);
-    //}
 }

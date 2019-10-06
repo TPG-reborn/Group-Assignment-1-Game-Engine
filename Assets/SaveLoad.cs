@@ -46,15 +46,15 @@ class SaveLoad : AbstractLoad
     /*
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.L))
-        {
-            whenSave();
-        }
-
-        if (Input.GetKeyDown(KeyCode.K))
-        {
-            whenLoad();
-        }
+        //if (Input.GetKeyDown(KeyCode.L))
+        //{
+        //    whenSave();
+        //}
+        //
+        //if (Input.GetKeyDown(KeyCode.K))
+        //{
+        //    whenLoad();
+        //}
     }
     */
 
