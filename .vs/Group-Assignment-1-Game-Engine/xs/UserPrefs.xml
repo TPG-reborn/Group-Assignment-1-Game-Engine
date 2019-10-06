@@ -1,0 +1,28 @@
+﻿<Properties StartupConfiguration="{87F70581-AEEF-9543-C1FD-764E2AC8E055}|">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/ObjectCreate.cs">
+    <Files>
+      <File FileName="Assets/SaveLoad.cs" Line="104" Column="1" />
+      <File FileName="Assets/Decorator.cs" Line="20" Column="2" />
+      <File FileName="Assets/ObjectCreate.cs" Line="14" Column="63" />
+      <File FileName="Assets/Movement.cs" Line="1" Column="1" />
+    </Files>
+    <Pads>
+      <Pad Id="ProjectPad">
+        <State name="__root__">
+          <Node name="Group-Assignment-1-Game-Engine" expanded="True">
+            <Node name="Assets" expanded="True">
+              <Node name="ObjectCreate.cs" selected="True" />
+            </Node>
+          </Node>
+        </State>
+      </Pad>
+    </Pads>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="9366b2f2-039c-4863-bd0b-02b2b6692e64" />
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MultiItemStartupConfigurations />
+</Properties>

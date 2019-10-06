@@ -3,42 +3,47 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Runtime.InteropServices;
 
-public class SaveLoad : MonoBehaviour
+abstract class AbstractLoad: MonoBehaviour
 {
+    public abstract void whenLoad();
+    public abstract void whenSave();
+
     //Set the name of the referenced DLL file
     const string DLL_NAME = "DLL TUTORIAL 2";
 
     //Referencing all of the needed functions from the DLL
     [DllImport(DLL_NAME)]
-    private static extern void SavePos(string file);
+    public static extern void SavePos(string file);
 
     [DllImport(DLL_NAME)]
-    private static extern void LoadPos(string file);
+    public static extern void LoadPos(string file);
 
     [DllImport(DLL_NAME)]
-    private static extern float setX(float x);
+    public static extern float setX(float x);
 
     [DllImport(DLL_NAME)]
-    private static extern float setY(float y);
+    public static extern float setY(float y);
 
     [DllImport(DLL_NAME)]
-    private static extern float setZ(float z);
+    public static extern float setZ(float z);
 
     [DllImport(DLL_NAME)]
-    private static extern float getX();
+    public static extern float getX();
 
     [DllImport(DLL_NAME)]
-    private static extern float getY();
+    public static extern float getY();
 
     [DllImport(DLL_NAME)]
-    private static extern float getZ();
+    public static extern float getZ();
 
-    void Start()
-    {
-        
-    }
+}
+
+class SaveLoad : AbstractLoad
+{
+   
 
     //Check for the inputs below at every frame
+    /*
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.L))
@@ -51,9 +56,10 @@ public class SaveLoad : MonoBehaviour
             whenLoad();
         }
     }
+    */
 
     //What to do when saving position of the cube
-    public void whenSave()
+    public override void whenSave()
     {
         //Store the float values of the X,Y,Z position of the cube
         float posX = gameObject.transform.position.x;
@@ -72,7 +78,7 @@ public class SaveLoad : MonoBehaviour
         SavePos("Position.txt");
     }
 
-    public void whenLoad()
+    public override void whenLoad()
     {
         //Read the values stored in the text file
         LoadPos("Position.txt");
@@ -87,5 +93,61 @@ public class SaveLoad : MonoBehaviour
 
         //Show loaded position in debug log
         Debug.Log("Loaded Cube Position: " + posX + ", " + posY + "," + posZ);
+    }
+}
+
+class SaveLoadDecorator : AbstractLoad
+{
+    public override void whenSave()
+    {
+
+        GameObject[] cubes;
+        cubes = GameObject.FindGameObjectsWithTag("Cube");
+
+        Vector3[] positions = new Vector3[cubes.Length];
+
+        foreach (GameObject cube in cubes)
+        {
+            for (int i = 0; i <= positions.Length; i++)
+            {
+                positions[i].x = cube.transform.position.x;
+                positions[i].y = cube.transform.position.y;
+                positions[i].z = cube.transform.position.z;
+
+                setX(positions[i].x);
+                setY(positions[i].y);
+                setZ(positions[i].z);
+            }
+        }
+       
+    }
+
+    public override void whenLoad()
+    {
+        GameObject[] cubes;
+        cubes = GameObject.FindGameObjectsWithTag("Cube");
+
+        Vector3[] positions = new Vector3[cubes.Length];
+
+        foreach (GameObject cube in cubes)
+        {
+            for (int i = 0; i <= positions.Length; i++)
+            {
+                cube.transform.position = new Vector3(positions[i].x, positions[i].y, positions[i].z);
+            }
+        }
+    }
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.L))
+        {
+            whenSave();
+        }
+
+        if (Input.GetKeyDown(KeyCode.K))
+        {
+            whenLoad();
+        }
     }
 }

@@ -12,9 +12,11 @@ public interface Building
 public class Box : Building
 {
     GameObject cube = GameObject.CreatePrimitive(PrimitiveType.Cube);
+ 
     public void Build(Vector3 pos, Vector3 scale)
     {
         cube.SetActive(true);
+        cube.tag = "Cube";
         cube.transform.position = new Vector3(pos.x, pos.y, pos.z);
         cube.transform.localScale = new Vector3(1, 1, 1);
         cube.AddComponent<BoxCollider>();
@@ -31,6 +33,7 @@ public class Sphere : Building
     public void Build(Vector3 pos, Vector3 scale)
     {
         sphere.SetActive(true);
+        sphere.tag = "Sphere";
         sphere.transform.position = new Vector3(pos.x, pos.y, pos.z);
         sphere.transform.localScale = new Vector3(1, 1, 1);
     }
