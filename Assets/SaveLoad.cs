@@ -41,15 +41,15 @@ public class SaveLoad : MonoBehaviour
     //Check for the inputs below at every frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.L))
-        {
-            whenSave();
-        }
-
-        if (Input.GetKeyDown(KeyCode.K))
-        {
-            whenLoad();
-        }
+        //if (Input.GetKeyDown(KeyCode.L))
+        //{
+        //    whenSave();
+        //}
+        //
+        //if (Input.GetKeyDown(KeyCode.K))
+        //{
+        //    whenLoad();
+        //}
     }
 
     //What to do when saving position of the cube
