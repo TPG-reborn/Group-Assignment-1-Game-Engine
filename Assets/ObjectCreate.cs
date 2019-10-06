@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -57,10 +57,10 @@ public class Sphere : Building
 
 public class Office : Building
 {
-    GameObject officePrefab = (GameObject)GameObject.Instantiate(Resources.Load("Office"));
+    GameObject officePrefab;
     public void Build(Vector3 pos, Vector3 scale)
     {
-        officePrefab = GameObject.Instantiate(officePrefab, pos, Quaternion.identity);
+        officePrefab = (GameObject)GameObject.Instantiate(Resources.Load("Office"));
         officePrefab.SetActive(true);
         officePrefab.transform.position = new Vector3(pos.x, pos.y, pos.z);
         officePrefab.transform.localScale = new Vector3(scale.x, scale.y, scale.z);
@@ -74,10 +74,10 @@ public class Office : Building
 
 public class Barn : Building
 {
-    GameObject barnPrefab = (GameObject)GameObject.Instantiate(Resources.Load("Barn"));
+    GameObject barnPrefab;
     public void Build(Vector3 pos, Vector3 scale)
     {
-        barnPrefab = GameObject.Instantiate(barnPrefab, pos, Quaternion.identity);
+        barnPrefab = (GameObject)GameObject.Instantiate(Resources.Load("Barn"));
         barnPrefab.SetActive(true);
         barnPrefab.transform.position = new Vector3(pos.x, pos.y, pos.z);
         barnPrefab.transform.localScale = new Vector3(scale.x, scale.y, scale.z);
@@ -91,10 +91,10 @@ public class Barn : Building
 
 public class Factory : Building
 {
-    GameObject factoryPrefab = (GameObject)GameObject.Instantiate(Resources.Load("Factory"));
+    GameObject factoryPrefab;
     public void Build(Vector3 pos, Vector3 scale)
     {
-        factoryPrefab = GameObject.Instantiate(factoryPrefab, pos, Quaternion.identity);
+        factoryPrefab = (GameObject)GameObject.Instantiate(Resources.Load("Factory"));
         factoryPrefab.SetActive(true);
         factoryPrefab.transform.position = new Vector3(pos.x, pos.y, pos.z);
         factoryPrefab.transform.localScale = new Vector3(scale.x, scale.y, scale.z);
@@ -108,10 +108,10 @@ public class Factory : Building
 
 public class Tall : Building
 {
-    GameObject tallPrefab = (GameObject)GameObject.Instantiate(Resources.Load("TallBuilding"));
+    GameObject tallPrefab;
     public void Build(Vector3 pos, Vector3 scale)
     {
-        tallPrefab = GameObject.Instantiate(tallPrefab, pos, Quaternion.identity);
+        tallPrefab = (GameObject)GameObject.Instantiate(Resources.Load("TallBuilding"));
         tallPrefab.SetActive(true);
         tallPrefab.transform.position = new Vector3(pos.x, pos.y, pos.z);
         tallPrefab.transform.localScale = new Vector3(scale.x, scale.y, scale.z);
@@ -125,10 +125,10 @@ public class Tall : Building
 
 public class AptBuilding : Building
 {
-    GameObject aptBuildingPrefab = (GameObject)GameObject.Instantiate(Resources.Load("AptBuilding"));
+    GameObject aptBuildingPrefab;
     public void Build(Vector3 pos, Vector3 scale)
     {
-        aptBuildingPrefab = GameObject.Instantiate(aptBuildingPrefab, pos, Quaternion.identity);
+        aptBuildingPrefab = (GameObject)GameObject.Instantiate(Resources.Load("AptBuilding"));
         aptBuildingPrefab.SetActive(true);
         aptBuildingPrefab.transform.position = new Vector3(pos.x, pos.y, pos.z);
         aptBuildingPrefab.transform.localScale = new Vector3(scale.x, scale.y, scale.z);
