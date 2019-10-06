@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System.Runtime.InteropServices;
+using System;
 
 abstract class AbstractLoad: MonoBehaviour
 {
@@ -9,7 +10,7 @@ abstract class AbstractLoad: MonoBehaviour
     public abstract void whenSave();
 
     //Set the name of the referenced DLL file
-    const string DLL_NAME = "DLL TUTORIAL 2";
+    const string DLL_NAME = "DLL Tutorial 2";
 
     //Referencing all of the needed functions from the DLL
     [DllImport(DLL_NAME)]
@@ -43,20 +44,20 @@ class SaveLoad : AbstractLoad
    
 
     //Check for the inputs below at every frame
-    /*
+    
     void Update()
     {
-        //if (Input.GetKeyDown(KeyCode.L))
-        //{
-        //    whenSave();
-        //}
-        //
-        //if (Input.GetKeyDown(KeyCode.K))
-        //{
-        //    whenLoad();
-        //}
+        if (Input.GetKeyDown(KeyCode.Alpha1))
+        {
+            whenSave();
+        }
+        
+        if (Input.GetKeyDown(KeyCode.Alpha2))
+        {
+            whenLoad();
+        }
     }
-    */
+    
 
     //What to do when saving position of the cube
     public override void whenSave()
@@ -140,13 +141,15 @@ class SaveLoadDecorator : AbstractLoad
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.L))
+        if (Input.GetKeyDown(KeyCode.Alpha1))
         {
+            Console.Write("Save");
             whenSave();
         }
 
-        if (Input.GetKeyDown(KeyCode.K))
+        if (Input.GetKeyDown(KeyCode.Alpha2))
         {
+            Console.Write("Load");
             whenLoad();
         }
     }
