@@ -3,6 +3,21 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /////// Factory Method Design Pattern Setup Start ///////
+
+public class Prefab : MonoBehaviour
+{
+    public GameObject _prefab;
+    //void convert(GameObject prefab)
+    //{
+    //    _prefab = prefab;
+    //}
+
+    public Prefab(GameObject prefab)
+    {
+        _prefab = prefab;
+    }
+}
+
 public interface Building
 {
     void Build(Vector3 pos, Vector3 scale);
@@ -40,6 +55,91 @@ public class Sphere : Building
     }
 }
 
+public class Office : Building
+{
+    GameObject officePrefab = (GameObject)GameObject.Instantiate(Resources.Load("Office"));
+    public void Build(Vector3 pos, Vector3 scale)
+    {
+        officePrefab = GameObject.Instantiate(officePrefab, pos, Quaternion.identity);
+        officePrefab.SetActive(true);
+        officePrefab.transform.position = new Vector3(pos.x, pos.y, pos.z);
+        officePrefab.transform.localScale = new Vector3(scale.x, scale.y, scale.z);
+    }
+    
+    public void Destruct()
+    {
+        officePrefab.SetActive(false);
+    }
+}
+
+public class Barn : Building
+{
+    GameObject barnPrefab = (GameObject)GameObject.Instantiate(Resources.Load("Barn"));
+    public void Build(Vector3 pos, Vector3 scale)
+    {
+        barnPrefab = GameObject.Instantiate(barnPrefab, pos, Quaternion.identity);
+        barnPrefab.SetActive(true);
+        barnPrefab.transform.position = new Vector3(pos.x, pos.y, pos.z);
+        barnPrefab.transform.localScale = new Vector3(scale.x, scale.y, scale.z);
+    }
+
+    public void Destruct()
+    {
+        barnPrefab.SetActive(false);
+    }
+}
+
+public class Factory : Building
+{
+    GameObject factoryPrefab = (GameObject)GameObject.Instantiate(Resources.Load("Factory"));
+    public void Build(Vector3 pos, Vector3 scale)
+    {
+        factoryPrefab = GameObject.Instantiate(factoryPrefab, pos, Quaternion.identity);
+        factoryPrefab.SetActive(true);
+        factoryPrefab.transform.position = new Vector3(pos.x, pos.y, pos.z);
+        factoryPrefab.transform.localScale = new Vector3(scale.x, scale.y, scale.z);
+    }
+
+    public void Destruct()
+    {
+        factoryPrefab.SetActive(false);
+    }
+}
+
+public class Tall : Building
+{
+    GameObject tallPrefab = (GameObject)GameObject.Instantiate(Resources.Load("TallBuilding"));
+    public void Build(Vector3 pos, Vector3 scale)
+    {
+        tallPrefab = GameObject.Instantiate(tallPrefab, pos, Quaternion.identity);
+        tallPrefab.SetActive(true);
+        tallPrefab.transform.position = new Vector3(pos.x, pos.y, pos.z);
+        tallPrefab.transform.localScale = new Vector3(scale.x, scale.y, scale.z);
+    }
+
+    public void Destruct()
+    {
+        tallPrefab.SetActive(false);
+    }
+}
+
+public class AptBuilding : Building
+{
+    GameObject aptBuildingPrefab = (GameObject)GameObject.Instantiate(Resources.Load("AptBuilding"));
+    public void Build(Vector3 pos, Vector3 scale)
+    {
+        aptBuildingPrefab = GameObject.Instantiate(aptBuildingPrefab, pos, Quaternion.identity);
+        aptBuildingPrefab.SetActive(true);
+        aptBuildingPrefab.transform.position = new Vector3(pos.x, pos.y, pos.z);
+        aptBuildingPrefab.transform.localScale = new Vector3(scale.x, scale.y, scale.z);
+    }
+
+    public void Destruct()
+    {
+        aptBuildingPrefab.SetActive(false);
+    }
+}
+
 public abstract class FactoryCreator
 {
     public abstract Building Type(int type);
@@ -57,6 +157,31 @@ public class BuildingFactory : FactoryCreator
         if (type == 2)
         {
             return new Sphere();
+        }
+
+        if (type == 3)
+        {
+            return new Office();
+        }
+
+        if (type == 4)
+        {
+            return new Barn();
+        }
+
+        if (type == 5)
+        {
+            return new Factory();
+        }
+
+        if (type == 6)
+        {
+            return new Tall();
+        }
+
+        if (type == 7)
+        {
+            return new AptBuilding();
         }
 
         return null;
@@ -121,10 +246,10 @@ public class RedoUndoButton
 }
 
 /////// Command Design Pattern Setup End /////////
-
 public class ObjectCreate : MonoBehaviour
 {
     public GameObject barn;
+    public GameObject barn2;
     BuildingFactory factory = new BuildingFactory();
 
     Vector3 lastObjPos;
@@ -147,7 +272,7 @@ public class ObjectCreate : MonoBehaviour
         redo = new Redo(lastObjPos, lastObjBuilt);
         undo = new Undo(unwanted);
 
-        if (Input.GetKeyDown(KeyCode.V))
+        if (Input.GetKeyDown(KeyCode.P))
         {
             Building builder = factory.Type(1);
             builder.Build(gameObject.transform.position, new Vector3(1, 1, 1));
@@ -156,10 +281,55 @@ public class ObjectCreate : MonoBehaviour
             unwanted = builder;
         }
 
-        if (Input.GetKeyDown(KeyCode.B))
+        if (Input.GetKeyDown(KeyCode.O))
         {
             Building builder = factory.Type(2);
             builder.Build(gameObject.transform.position, new Vector3(1, 1, 1));
+            lastObjPos = gameObject.transform.position;
+            lastObjBuilt = builder;
+            unwanted = builder;
+        }
+
+        if (Input.GetKeyDown(KeyCode.L))
+        {
+            Building builder = factory.Type(3);
+            builder.Build(gameObject.transform.position, new Vector3(0.7f, 0.7f, 0.7f));
+            lastObjPos = gameObject.transform.position;
+            lastObjBuilt = builder;
+            unwanted = builder;
+        }
+
+        if (Input.GetKeyDown(KeyCode.K))
+        {
+            Building builder = factory.Type(5);
+            builder.Build(gameObject.transform.position, new Vector3(0.7f, 0.7f, 0.7f));
+            lastObjPos = gameObject.transform.position;
+            lastObjBuilt = builder;
+            unwanted = builder;
+        }
+
+        if (Input.GetKeyDown(KeyCode.J))
+        {
+            Building builder = factory.Type(4);
+            builder.Build(gameObject.transform.position, new Vector3(0.7f, 0.7f, 0.7f));
+            lastObjPos = gameObject.transform.position;
+            lastObjBuilt = builder;
+            unwanted = builder;
+        }
+
+        if (Input.GetKeyDown(KeyCode.U))
+        {
+            Building builder = factory.Type(6);
+            builder.Build(gameObject.transform.position, new Vector3(0.7f, 0.7f, 0.7f));
+            lastObjPos = gameObject.transform.position;
+            lastObjBuilt = builder;
+            unwanted = builder;
+        }
+
+        if (Input.GetKeyDown(KeyCode.I))
+        {
+            Building builder = factory.Type(7);
+            builder.Build(gameObject.transform.position, new Vector3(0.7f, 0.7f, 0.7f));
             lastObjPos = gameObject.transform.position;
             lastObjBuilt = builder;
             unwanted = builder;
