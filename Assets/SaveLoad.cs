@@ -1,16 +1,17 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
 using System.Runtime.InteropServices;
+using UnityEngine;
 using System;
 
-abstract class AbstractLoad: MonoBehaviour
+
+abstract class AbstractLoad : MonoBehaviour
 {
     public abstract void whenLoad();
     public abstract void whenSave();
 
     //Set the name of the referenced DLL file
-    const string DLL_NAME = "DLL Tutorial 2";
+    const string DLL_NAME = "DLLPlugin";
 
     //Referencing all of the needed functions from the DLL
     [DllImport(DLL_NAME)]
@@ -39,25 +40,15 @@ abstract class AbstractLoad: MonoBehaviour
 
 }
 
+
 class SaveLoad : AbstractLoad
 {
-   
+
 
     //Check for the inputs below at every frame
-    
-    void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Alpha1))
-        {
-            whenSave();
-        }
-        
-        if (Input.GetKeyDown(KeyCode.Alpha2))
-        {
-            whenLoad();
-        }
-    }
-    
+
+
+    //SAVE SINGLE CUBE 
 
     //What to do when saving position of the cube
     public override void whenSave()
@@ -95,49 +86,6 @@ class SaveLoad : AbstractLoad
         //Show loaded position in debug log
         Debug.Log("Loaded Cube Position: " + posX + ", " + posY + "," + posZ);
     }
-}
-
-class SaveLoadDecorator : AbstractLoad
-{
-    public override void whenSave()
-    {
-
-        GameObject[] cubes;
-        cubes = GameObject.FindGameObjectsWithTag("Cube");
-
-        Vector3[] positions = new Vector3[cubes.Length];
-
-        foreach (GameObject cube in cubes)
-        {
-            for (int i = 0; i <= positions.Length; i++)
-            {
-                positions[i].x = cube.transform.position.x;
-                positions[i].y = cube.transform.position.y;
-                positions[i].z = cube.transform.position.z;
-
-                setX(positions[i].x);
-                setY(positions[i].y);
-                setZ(positions[i].z);
-            }
-        }
-       
-    }
-
-    public override void whenLoad()
-    {
-        GameObject[] cubes;
-        cubes = GameObject.FindGameObjectsWithTag("Cube");
-
-        Vector3[] positions = new Vector3[cubes.Length];
-
-        foreach (GameObject cube in cubes)
-        {
-            for (int i = 0; i <= positions.Length; i++)
-            {
-                cube.transform.position = new Vector3(positions[i].x, positions[i].y, positions[i].z);
-            }
-        }
-    }
 
     private void Update()
     {
@@ -145,6 +93,7 @@ class SaveLoadDecorator : AbstractLoad
         {
             Console.Write("Save");
             whenSave();
+
         }
 
         if (Input.GetKeyDown(KeyCode.Alpha2))
@@ -153,4 +102,6 @@ class SaveLoadDecorator : AbstractLoad
             whenLoad();
         }
     }
+
 }
+
